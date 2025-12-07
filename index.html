@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Markets = Machine Learning</title>
+    <title>Prediction Markets = Machine Learning | Gensyn</title>
     <style>
         * {
             margin: 0;
@@ -16,314 +16,275 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #000;
-            font-family: 'Arial', sans-serif;
+            background: #000000;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
         }
 
         .container {
             width: 1200px;
             height: 675px;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            background: #0a0a0a;
             position: relative;
-            overflow: hidden;
+            padding: 60px;
         }
 
-        .side {
+        /* Top Logo */
+        .logo {
             position: absolute;
-            width: 45%;
-            height: 100%;
+            top: 30px;
+            left: 30px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 40px;
+            gap: 12px;
         }
 
-        .left {
-            left: 0;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ffb3ba;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
         }
 
-        .right {
-            right: 0;
+        .logo-text {
+            font-size: 24px;
+            color: #ffb3ba;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding-top: 40px;
+        }
+
+        .box {
+            width: 45%;
+            text-align: center;
         }
 
         .title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
+            font-size: 32px;
+            font-weight: 700;
             margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .left .title {
-            color: #00d9ff;
+            color: #4fb3ff;
         }
 
         .right .title {
-            color: #a855f7;
+            color: #ffb3ba;
         }
 
+        /* Simple Visual */
         .visual {
-            width: 300px;
-            height: 200px;
-            margin-bottom: 30px;
-            position: relative;
+            margin-bottom: 40px;
+            padding: 20px;
         }
 
-        .chart {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .candlestick {
-            position: absolute;
-            width: 20px;
-            background: #00d9ff;
-            bottom: 0;
-            border-radius: 3px;
-        }
-
-        .candlestick:nth-child(1) { left: 20px; height: 60px; animation-delay: 0s; }
-        .candlestick:nth-child(2) { left: 50px; height: 90px; animation-delay: 0.2s; }
-        .candlestick:nth-child(3) { left: 80px; height: 75px; animation-delay: 0.4s; }
-        .candlestick:nth-child(4) { left: 110px; height: 120px; animation-delay: 0.6s; }
-        .candlestick:nth-child(5) { left: 140px; height: 100px; animation-delay: 0.8s; }
-        .candlestick:nth-child(6) { left: 170px; height: 140px; animation-delay: 1s; }
-        .candlestick:nth-child(7) { left: 200px; height: 130px; animation-delay: 1.2s; }
-        .candlestick:nth-child(8) { left: 230px; height: 160px; animation-delay: 1.4s; }
-
-        .price-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #00d9ff;
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .network {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .layer {
-            position: absolute;
+        /* Market Bars */
+        .bars {
             display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            height: 100%;
-        }
-
-        .layer-1 { left: 20px; }
-        .layer-2 { left: 130px; }
-        .layer-3 { left: 240px; }
-
-        .node {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #a855f7;
-            box-shadow: 0 0 20px #a855f7;
-        }
-
-        .flow {
-            text-align: center;
-            color: #fff;
-            font-size: 16px;
-            line-height: 2;
-        }
-
-        .flow-text {
-            margin: 10px 0;
-        }
-
-        .arrow {
-            color: #22c55e;
-            font-size: 24px;
-        }
-
-        .center {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .equals {
-            font-size: 120px;
-            color: #a855f7;
-            font-weight: bold;
-            text-shadow: 0 0 40px #a855f7, 0 0 80px #a855f7;
+            justify-content: center;
+            align-items: flex-end;
+            height: 120px;
+            gap: 8px;
             margin-bottom: 20px;
         }
 
-        .same-math {
-            font-size: 24px;
-            color: #fff;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        .bar {
+            width: 18px;
+            background: #4fb3ff;
+            border-radius: 3px 3px 0 0;
         }
 
-        .subtitle {
-            font-size: 16px;
-            color: #888;
-            margin-top: 10px;
+        .bar:nth-child(1) { height: 40%; }
+        .bar:nth-child(2) { height: 60%; }
+        .bar:nth-child(3) { height: 50%; }
+        .bar:nth-child(4) { height: 80%; }
+        .bar:nth-child(5) { height: 70%; }
+        .bar:nth-child(6) { height: 95%; }
+
+        .price {
+            display: inline-block;
+            background: #4fb3ff;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 20px;
+            font-weight: 700;
         }
 
-        .banner {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            text-align: center;
-            color: #fff;
+        /* Network Dots */
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .dot-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffb3ba;
+            box-shadow: 0 0 15px #ffb3ba;
+        }
+
+        /* Text Flow */
+        .flow {
+            color: #ffffff;
             font-size: 18px;
-            line-height: 1.6;
+            line-height: 2.5;
         }
 
-        .banner strong {
-            color: #00d9ff;
+        .arrow {
+            color: #4fb3ff;
+            font-size: 28px;
+            display: block;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: translateY(0); }
-            50% { opacity: 0.6; transform: translateY(-5px); }
-        }
-
-        .candlestick {
-            animation: pulse 2s infinite;
-        }
-
-        .node {
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 40px #a855f7; }
-            50% { text-shadow: 0 0 80px #a855f7, 0 0 120px #ec4899; }
+        /* Center Equals */
+        .center {
+            text-align: center;
         }
 
         .equals {
-            animation: glow 2s infinite;
+            font-size: 100px;
+            color: #ffb3ba;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
-        @media (max-width: 1200px) {
-            .container {
-                width: 100%;
-                height: auto;
-                min-height: 100vh;
-            }
-            .side {
-                position: relative;
-                width: 100%;
-                height: auto;
-                padding: 20px;
-            }
-            .center {
-                position: relative;
-                transform: none;
-                margin: 40px 0;
-            }
+        .math-text {
+            font-size: 28px;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 2px;
         }
+
+        /* Bottom Text */
+        .bottom {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #888888;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .bottom strong {
+            color: #ffb3ba;
+            font-weight: 600;
+        }
+
+        /* Simple animations */
+        @keyframes fadeIn {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        .bar, .dot {
+            animation: fadeIn 2s ease-in-out infinite alternate;
+        }
+
+        .bar:nth-child(1) { animation-delay: 0s; }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        .bar:nth-child(4) { animation-delay: 0.6s; }
+        .bar:nth-child(5) { animation-delay: 0.8s; }
+        .bar:nth-child(6) { animation-delay: 1s; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="side left">
-            <div class="title">Prediction Market</div>
-            <div class="visual">
-                <div class="chart">
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="candlestick"></div>
-                    <div class="price-tag">$0.67</div>
+        <!-- Logo -->
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <div class="logo-text">gensyn</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Left: Prediction Market -->
+            <div class="box left">
+                <div class="title">Prediction Market</div>
+                <div class="visual">
+                    <div class="bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <div class="price">$0.67</div>
+                </div>
+                <div class="flow">
+                    Messy info
+                    <span class="arrow">↓</span>
+                    Update prices
+                    <span class="arrow">↓</span>
+                    = Probability
                 </div>
             </div>
-            <div class="flow">
-                <div class="flow-text">Messy information</div>
-                <div class="arrow">↓</div>
-                <div class="flow-text">Traders update prices</div>
-                <div class="arrow">↓</div>
-                <div class="flow-text">Final price = probability</div>
-            </div>
-        </div>
 
-        <div class="side right">
-            <div class="title">Machine Learning</div>
-            <div class="visual">
-                <div class="network">
-                    <div class="layer layer-1">
-                        <div class="node"></div>
-                        <div class="node"></div>
-                        <div class="node"></div>
-                        <div class="node"></div>
-                    </div>
-                    <div class="layer layer-2">
-                        <div class="node"></div>
-                        <div class="node"></div>
-                        <div class="node"></div>
-                    </div>
-                    <div class="layer layer-3">
-                        <div class="node"></div>
-                        <div class="node"></div>
+            <!-- Center: Equals -->
+            <div class="center">
+                <div class="equals">=</div>
+                <div class="math-text">SAME MATH</div>
+            </div>
+
+            <!-- Right: Machine Learning -->
+            <div class="box right">
+                <div class="title">Machine Learning</div>
+                <div class="visual">
+                    <div class="dots">
+                        <div class="dot-column">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="dot-column">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="dot-column">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="flow">
-                <div class="flow-text">Messy data</div>
-                <div class="arrow">↓</div>
-                <div class="flow-text">Model updates weights</div>
-                <div class="arrow">↓</div>
-                <div class="flow-text">Final output = probability</div>
+                <div class="flow">
+                    Messy data
+                    <span class="arrow">↓</span>
+                    Update weights
+                    <span class="arrow">↓</span>
+                    = Probability
+                </div>
             </div>
         </div>
 
-        <div class="center">
-            <div class="equals">=</div>
-            <div class="same-math">Same Math</div>
-            <div class="subtitle">Same Process</div>
-        </div>
-
-        <div class="banner">
+        <!-- Bottom Text -->
+        <div class="bottom">
             Both compress fragmented information into probabilities<br>
-            <strong>Gensyn</strong> uses this equivalence for decentralized training
+            <strong>Gensyn</strong> uses this for decentralized training
         </div>
     </div>
 </body>
 </html>
-```
-
-4. Click **"Commit new file"** (green button at bottom)
-
----
-
-## Step 3: Enable GitHub Pages
-
-1. Go to your repo **Settings** (top menu)
-2. Scroll down to **"Pages"** (left sidebar)
-3. Under **"Source"**, select **"Deploy from a branch"**
-4. Under **"Branch"**, select **"main"** and **"/ (root)"**
-5. Click **"Save"**
-
----
-
-## Step 4: Get Your Live Link
-
-Wait 1-2 minutes, then your site will be live at:
-```
-https://YOUR-USERNAME.github.io/markets-ml-visualization/
