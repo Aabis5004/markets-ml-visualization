@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Markets = Machine Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            width: 1200px;
+            height: 675px;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .side {
+            position: absolute;
+            width: 45%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            right: 0;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .left .title {
+            color: #00d9ff;
+        }
+
+        .right .title {
+            color: #a855f7;
+        }
+
+        .visual {
+            width: 300px;
+            height: 200px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .chart {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .candlestick {
+            position: absolute;
+            width: 20px;
+            background: #00d9ff;
+            bottom: 0;
+            border-radius: 3px;
+        }
+
+        .candlestick:nth-child(1) { left: 20px; height: 60px; animation-delay: 0s; }
+        .candlestick:nth-child(2) { left: 50px; height: 90px; animation-delay: 0.2s; }
+        .candlestick:nth-child(3) { left: 80px; height: 75px; animation-delay: 0.4s; }
+        .candlestick:nth-child(4) { left: 110px; height: 120px; animation-delay: 0.6s; }
+        .candlestick:nth-child(5) { left: 140px; height: 100px; animation-delay: 0.8s; }
+        .candlestick:nth-child(6) { left: 170px; height: 140px; animation-delay: 1s; }
+        .candlestick:nth-child(7) { left: 200px; height: 130px; animation-delay: 1.2s; }
+        .candlestick:nth-child(8) { left: 230px; height: 160px; animation-delay: 1.4s; }
+
+        .price-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #00d9ff;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .network {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .layer {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        .layer-1 { left: 20px; }
+        .layer-2 { left: 130px; }
+        .layer-3 { left: 240px; }
+
+        .node {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #a855f7;
+            box-shadow: 0 0 20px #a855f7;
+        }
+
+        .flow {
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .flow-text {
+            margin: 10px 0;
+        }
+
+        .arrow {
+            color: #22c55e;
+            font-size: 24px;
+        }
+
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .equals {
+            font-size: 120px;
+            color: #a855f7;
+            font-weight: bold;
+            text-shadow: 0 0 40px #a855f7, 0 0 80px #a855f7;
+            margin-bottom: 20px;
+        }
+
+        .same-math {
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .banner strong {
+            color: #00d9ff;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0.6; transform: translateY(-5px); }
+        }
+
+        .candlestick {
+            animation: pulse 2s infinite;
+        }
+
+        .node {
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 40px #a855f7; }
+            50% { text-shadow: 0 0 80px #a855f7, 0 0 120px #ec4899; }
+        }
+
+        .equals {
+            animation: glow 2s infinite;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+            }
+            .side {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+            .center {
+                position: relative;
+                transform: none;
+                margin: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="side left">
+            <div class="title">Prediction Market</div>
+            <div class="visual">
+                <div class="chart">
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="candlestick"></div>
+                    <div class="price-tag">$0.67</div>
+                </div>
+            </div>
+            <div class="flow">
+                <div class="flow-text">Messy information</div>
+                <div class="arrow">↓</div>
+                <div class="flow-text">Traders update prices</div>
+                <div class="arrow">↓</div>
+                <div class="flow-text">Final price = probability</div>
+            </div>
+        </div>
+
+        <div class="side right">
+            <div class="title">Machine Learning</div>
+            <div class="visual">
+                <div class="network">
+                    <div class="layer layer-1">
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="node"></div>
+                    </div>
+                    <div class="layer layer-2">
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="node"></div>
+                    </div>
+                    <div class="layer layer-3">
+                        <div class="node"></div>
+                        <div class="node"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flow">
+                <div class="flow-text">Messy data</div>
+                <div class="arrow">↓</div>
+                <div class="flow-text">Model updates weights</div>
+                <div class="arrow">↓</div>
+                <div class="flow-text">Final output = probability</div>
+            </div>
+        </div>
+
+        <div class="center">
+            <div class="equals">=</div>
+            <div class="same-math">Same Math</div>
+            <div class="subtitle">Same Process</div>
+        </div>
+
+        <div class="banner">
+            Both compress fragmented information into probabilities<br>
+            <strong>Gensyn</strong> uses this equivalence for decentralized training
+        </div>
+    </div>
+</body>
+</html>
+```
+
+4. Click **"Commit new file"** (green button at bottom)
+
+---
+
+## Step 3: Enable GitHub Pages
+
+1. Go to your repo **Settings** (top menu)
+2. Scroll down to **"Pages"** (left sidebar)
+3. Under **"Source"**, select **"Deploy from a branch"**
+4. Under **"Branch"**, select **"main"** and **"/ (root)"**
+5. Click **"Save"**
+
+---
+
+## Step 4: Get Your Live Link
+
+Wait 1-2 minutes, then your site will be live at:
+```
+https://YOUR-USERNAME.github.io/markets-ml-visualization/
